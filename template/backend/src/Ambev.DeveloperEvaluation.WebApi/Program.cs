@@ -61,6 +61,12 @@ public class Program
                 app.UseSwaggerUI();
             }
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+                db.Database.Migrate();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
